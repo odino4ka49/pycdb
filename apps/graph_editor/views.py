@@ -308,8 +308,8 @@ def saveNode(request):
         node = json.loads(data["node"])
         view_id = data['view_id']
         the_view = None if (view_id=="") else View.objects.get(id=view_id)
-        if(the_view==None):
-            attrs = json.loads(data["attrs"])
+        attrs = json.loads(data["attrs"])
+        if((the_view==None) and (attrs!=None)):
             ent = request.configuration.loadEntity(node["cid"], node["id"])
             class_info = request.configuration.classes[node["cid"]]
             for attr in class_info["attributes"]:
