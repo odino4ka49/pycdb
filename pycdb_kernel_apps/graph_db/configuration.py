@@ -302,6 +302,7 @@ class Configuration:
             max_ids = self.storage.nxgraph.graph["max_ids"]
             if cid not in max_ids: max_ids[cid] = 1
             id = max_ids[cid]
+            relation.id = max_ids[cid]
             max_ids[cid] += 1
             self.storage.nxgraph.graph["edges_by_ids"][(cid, id)] = (relation.from_id, relation.to_id)
         # TODO: check for existence

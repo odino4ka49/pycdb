@@ -1,5 +1,5 @@
 __author__ = 'user'
-import random
+import random,sys
 from django.http import HttpResponse
 from graph_editor.utils.decorators import JsonResponse
 from portal.utils.array_helpers import getFirstOrNone
@@ -248,7 +248,8 @@ def addRelation(request):
     ent2 = request.configuration.loadEntity(rel["target"][0], rel["target"][1])
     relation = request.configuration.makeRelation(rel["cid"], ent1, ent2)
     relation.save()
-    return HttpResponse(relation.getId())
+    #relation.load()
+    return HttpResponse(relation.id)
 
 
 def addBackground(request):
