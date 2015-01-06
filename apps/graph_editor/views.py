@@ -387,6 +387,26 @@ def saveRelation(request):
     return HttpResponse(result)
 
 
+def saveObjectClass(request):
+    result = "success"
+    try:
+        data = request.GET
+        configuration = Configuration.objects.get(name=request.configuration.__class__.__name__)
+        oc = json.loads(data["oc"])
+        obj = ObjectClass.objects.get(cid=oc["id"],config=configuration)
+        obj.x=oc["x"]
+        obj.y=oc["y"]
+        obj.color=oc["color"]
+        obj.shape=oc["shape"]
+        obj.image=oc["image"]
+        obj.scale=oc["scale"]
+        obj.size=oc["size"]
+        obj.save()
+    except Exception,e:
+        result = e
+    return HttpResponse(result)
+
+
 def saveGraph(request):
     data = request.GET
     configuration = Configuration.objects.get(name=request.configuration.__class__.__name__)
