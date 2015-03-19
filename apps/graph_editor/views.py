@@ -125,6 +125,8 @@ def getGraphData(request):
             }]
             relations = request.configuration.getAllRelations(en,None,None,True,"from")
             for rel in relations:
+                rel_name = ""
+                if 'name' in rel: rel_name = rel["name"]
                 for node in nodes_list:
                     from_ent = rel.getFromEntity().getId()
                     if from_ent[0]==node["cid"] and from_ent[1]==node["id"]:
@@ -133,9 +135,12 @@ def getGraphData(request):
                             "source": from_ent,
                             "target": rel.getToEntity().getId(),
                             "cid": rel.getId()[0],
+                            "name": rel_name,
                         }]
             relations = request.configuration.getAllRelations(en,None,None,True,"to")
             for rel in relations:
+                rel_name = ""
+                if 'name' in rel: rel_name = rel["name"]
                 for node in nodes_list:
                     to_ent = rel.getToEntity().getId()
                     if to_ent[0]==node["cid"] and to_ent[1]==node["id"]:
@@ -144,6 +149,7 @@ def getGraphData(request):
                             "source": rel.getFromEntity().getId(),
                             "target": to_ent,
                             "cid": rel.getId()[0],
+                            "name":rel_name,
                         }]
         except Exception,e:
             pass
