@@ -113,7 +113,7 @@ def getGraphData(request):
             nodes_list += [{
                 "id": en.getId()[1],
                 "cid": en.getId()[0],
-                "title": en["name"],
+                "title": en["readable_name"],
                 "x": object_info.x,
                 "y": object_info.y,
                 "color": object_info.color,
