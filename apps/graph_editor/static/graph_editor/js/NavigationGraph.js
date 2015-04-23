@@ -46,7 +46,7 @@ ZOOMPYCDB.NavigationGraph = function(model,elements){
 		        force = d3.layout.force()
 				    .charge(function(d) { return -120; })
 				    .linkDistance(function(d) { return Math.max(d.target.size,d.source.size); })
-				    .gravity(0.03);
+				    .gravity(0.1);
         	if(graph_data===undefined) return;
 	    	force.nodes(force_graph.nodes)
 	        	.links(force_graph.rels)
@@ -199,12 +199,22 @@ ZOOMPYCDB.NavigationGraph = function(model,elements){
 		        }
 		        return nodes.push(node) -1;
 		    }
+        },
+        
+        zoomed = function(){
+            scale = d3.event.scale;
+            container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
         };
         
+        zoom = d3.behavior.zoom()
+	        .scaleExtent([0.1, 60])
+	        .on("zoom", zoomed);
         scale = 1;
-        svg = canvas;
-    lines_path = svg.append("g");
-    nodes_path = svg.append("g");
+        svg = canvas.call(zoom)
+	        .on("dblclick.zoom", null);
+        container = svg.append("g");
+    lines_path = container.append("g");
+    nodes_path = container.append("g");
     
     $(document).on("graph_changed",function(){
         initialize();
