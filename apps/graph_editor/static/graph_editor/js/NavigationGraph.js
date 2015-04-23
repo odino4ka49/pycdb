@@ -42,11 +42,7 @@ ZOOMPYCDB.NavigationGraph = function(model,elements){
         refresh = function (){
         	var lines,
         		nodes,
-        		type,
-		        force = d3.layout.force()
-				    .charge(function(d) { return -120; })
-				    .linkDistance(function(d) { return Math.max(d.target.size,d.source.size); })
-				    .gravity(0.1);
+        		type;
         	if(graph_data===undefined) return;
 	    	force.nodes(force_graph.nodes)
 	        	.links(force_graph.rels)
@@ -106,7 +102,7 @@ ZOOMPYCDB.NavigationGraph = function(model,elements){
 		    var nodes_img = nodes_path.selectAll("image").data(force_graph.nodes);
             nodes_img.enter().append("image");
             nodes_img
-		      .call(force.drag)
+		      .call(drag)
 		      .on("dblclick",function(d){
 		            d.isCurrentlyFocused = !d.isCurrentlyFocused;
 		            if(d.isCurrentlyFocused) d.size=d.size*2;
@@ -204,11 +200,22 @@ ZOOMPYCDB.NavigationGraph = function(model,elements){
         zoomed = function(){
             scale = d3.event.scale;
             container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+        },
+        dragstarted = function(){
+   			d3.event.sourceEvent.stopPropagation();
         };
         
+        
+    	force = d3.layout.force()
+			    .charge(function(d) { return -120; })
+			    .linkDistance(function(d) { return Math.max(d.target.size,d.source.size); })
+			    .gravity(0.1);
         zoom = d3.behavior.zoom()
 	        .scaleExtent([0.1, 60])
 	        .on("zoom", zoomed);
+	    drag = force.drag()
+			.origin(function(d) { return d; })
+			.on("dragstart", dragstarted);
         scale = 1;
         svg = canvas.call(zoom)
 	        .on("dblclick.zoom", null);
