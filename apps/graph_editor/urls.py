@@ -27,4 +27,5 @@ urlpatterns = patterns('',
     url(r'^deleteRelation/(?P<cid>\d+)/(?P<id>\d+)$', 'graph_editor.views.deleteRelation', name="views-delete-rel"),
     url(r'^deleteBg/(?P<id>\d+)$', 'graph_editor.views.deleteBg', name="views-delete-bg"),
     url(r'^deleteView/(?P<id>\d+)$', 'graph_editor.views.deleteView', name="views-delete-view"),
+    url(r'^navigation/', 'graph_editor.views.force_navigation', name="views-navigation"),
 )

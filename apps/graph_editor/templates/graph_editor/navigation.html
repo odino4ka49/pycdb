@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <script type="text/javascript" src="{{ STATIC_URL }}graph_editor/js/d3.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}graph_editor/js/NavigationMain.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}graph_editor/js/NavigationGraph.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}graph_editor/js/NGController.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}graph_editor/js/Cookies.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}graph_editor/js/Storage.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}graph_editor/js/TempData.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}graph_editor/js/Logger.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}graph_editor/js/Keyboard.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}graph_editor/css/main.css">
+{% endblock %}
+{% block content %}
+	<svg id="graph_map" width="98%" height="98%">
+	</svg>
+    <div id="error_message">Error: </div>
+{% endblock content %}

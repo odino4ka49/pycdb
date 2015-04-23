@@ -13,7 +13,11 @@ MENU_ITEMS = [
                     #]
                     },
               {
-               "title" : "Views Editor",
-               "url" : reverse("views-choose-views")
+                    "title" : "Views Editor",
+                    "url" : reverse("views-choose-views")
+               },
+              {
+                    "title" : "Force Graph Navigatoin",
+                    "url" : reverse("views-navigation")
                }
 ]

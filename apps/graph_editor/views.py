@@ -40,6 +40,13 @@ def edit_view(request,id):
 #    return JsonResponse(dev)
 #    return HttpResponse(dev))
 
+@render_to("graph_editor/navigation.html")
+def force_navigation(request):
+    conf = request.configuration
+
+    return {}
+
+
 def configData(request):
     classes_list = []
     relations_list = []
