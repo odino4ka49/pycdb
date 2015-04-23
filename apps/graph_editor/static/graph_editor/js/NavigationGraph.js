@@ -45,7 +45,7 @@ ZOOMPYCDB.NavigationGraph = function(model,elements){
         		type,
 		        force = d3.layout.force()
 				    .charge(function(d) { return -120; })
-				    .linkDistance(function(d) { return d.target.size; })
+				    .linkDistance(function(d) { return Math.max(d.target.size,d.source.size); })
 				    .gravity(0.03);
         	if(graph_data===undefined) return;
 	    	force.nodes(force_graph.nodes)
