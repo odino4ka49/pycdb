@@ -49,6 +49,10 @@ class VEPP4K500(Configuration):
         # Tiny class without base attributes
         self.addEntityClass(9, "device_profile", "Device Profile", "",  base_attributes_top + [
             ] + base_attributes_bottom)
+        
+        # Special tag class
+        self.addEntityClass(149, "tag", "tag", "",   base_attributes_top + [
+            ])
 
         ############ EDGES #############
         self.addRelationClass(102, "type", "Types", "Typification links", [
@@ -127,4 +131,44 @@ class VEPP4K500(Configuration):
                 {"cname":"logical_socket_type", "multiplicity" : self.MUL_ONE}
             ),
        ])
+        
+        self.addRelationClass(1149, "tag_link", "tag_link", "Tag link", [
+        ], [
+            makeAllowedRelation(
+                {"cname":"device", "multiplicity" : self.MUL_ZERO_OR_MORE},
+                {"cname":"tag", "multiplicity" : self.MUL_ZERO_OR_MORE}
+            ),
+            makeAllowedRelation(
+                {"cname":"server", "multiplicity" : self.MUL_ZERO_OR_MORE},
+                {"cname":"tag", "multiplicity" : self.MUL_ZERO_OR_MORE}
+            ),
+            makeAllowedRelation(
+                {"cname":"ioc", "multiplicity" : self.MUL_ZERO_OR_MORE},
+                {"cname":"tag", "multiplicity" : self.MUL_ZERO_OR_MORE}
+            ),
+            makeAllowedRelation(
+                {"cname":"device_type", "multiplicity" : self.MUL_ZERO_OR_MORE},
+                {"cname":"tag", "multiplicity" : self.MUL_ZERO_OR_MORE}
+            ),
+            makeAllowedRelation(
+                {"cname":"cs_channel", "multiplicity" : self.MUL_ZERO_OR_MORE},
+                {"cname":"tag", "multiplicity" : self.MUL_ZERO_OR_MORE}
+            ),
+            makeAllowedRelation(
+                {"cname":"logical_pin", "multiplicity" : self.MUL_ZERO_OR_MORE},
+                {"cname":"tag", "multiplicity" : self.MUL_ZERO_OR_MORE}
+            ),
+            makeAllowedRelation(
+                {"cname":"logical_socket", "multiplicity" : self.MUL_ZERO_OR_MORE},
+                {"cname":"tag", "multiplicity" : self.MUL_ZERO_OR_MORE}
+            ),
+            makeAllowedRelation(
+                {"cname":"logical_socket_type", "multiplicity" : self.MUL_ZERO_OR_MORE},
+                {"cname":"tag", "multiplicity" : self.MUL_ZERO_OR_MORE}
+            ),
+            makeAllowedRelation(
+                {"cname":"device_profile", "multiplicity" : self.MUL_ZERO_OR_MORE},
+                {"cname":"tag", "multiplicity" : self.MUL_ZERO_OR_MORE}
+            ),
+        ])
 

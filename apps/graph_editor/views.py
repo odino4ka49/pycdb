@@ -8,6 +8,7 @@ from graph_editor.models import Object,ObjectClass,Configuration,Background,View
 #from graph_db.configuration import test_config
 from portal.input_widgets.entity_id_selector import GetHtmlEntityIdSelector
 from string import maketrans
+from django.db.models import Q
 import json
 import sys
 
@@ -56,6 +57,8 @@ def configData(request):
     cids.sort()
     for cls_id in cids:
         cls_info = request.configuration.classes[cls_id]
+        #tag_id = cls_info
+        #if cls_info["name"]!="tag" and cls_info["name"]!="tag_link":
         cls_model_info = ObjectClass.objects.get(cid=cls_id,config=configuration_id)
         if cls_info["type"] == "entity_class":
             classes_list += [{
@@ -80,10 +83,16 @@ def configData(request):
                 "y": cls_model_info.y,
                 "color": cls_model_info.color,
                 "size": cls_model_info.size,
-                "allowed_relations": cls_info["allowed_relations"]
+                "allowed_relations": filterTagRelations(cls_info["allowed_relations"])
             }]
     return JsonResponse({"nodes":classes_list,"rels":relations_list})
 
+def filterTagRelations(relations):
+    #print >>sys.stdout, relations
+    """for rel in relations:
+        if rel["to"]["cid"]==149 or rel["from"]["cid"]==149:
+            relations.remove(rel)"""
+    return relations
 
 def getViewsData(request):
     views_list = []
@@ -114,9 +123,10 @@ def getGraphData(request):
     for cid in cids:
         entities += request.configuration.getAllEntities(cid)
 
+
     for en in entities:
         try:
-            object_info = Object.objects.get(oid=str(en.getId()).translate(trans,'(|)| '),config=configuration,view=the_view)                
+            object_info = Object.objects.get(oid=str(en.getId()).translate(trans,'(|)| '),config=configuration,view=the_view) 
             nodes_list += [{
                 "id": en.getId()[1],
                 "cid": en.getId()[0],
