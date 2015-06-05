@@ -122,7 +122,7 @@ def getGraphData(request):
     nodes_list = []
     relations_list = []
     backgrounds_list = []
-    configuration = Configuration.objects.get(name=request.configuration.__class__.__name__).id
+    configuration = Configuration.objects.get(name=request.configuration.__class__.__name__)
     trans = maketrans("","")
     view_id = data['view_id']
     the_view = None if (view_id=="") else View.objects.get(id=view_id)
@@ -136,50 +136,51 @@ def getGraphData(request):
 
     for en in entities:
         try:
-            object_info = Object.objects.get(oid=str(en.getId()).translate(trans,'(|)| '),config=configuration,view=the_view) 
-            nodes_list += [{
-                "id": en.getId()[1],
-                "cid": en.getId()[0],
-                "title": en["readable_name"],
-                "x": object_info.x,
-                "y": object_info.y,
-                "color": object_info.color,
-                "shape": object_info.shape,
-                "size": object_info.size,
-                "image": object_info.image,
-                "scale": object_info.scale
-                #"test": str(en.getId()).translate(maketrans("",""),'(|)| '),
-            }]
-            relations = request.configuration.getAllRelations(en,None,None,True,"from")
-            for rel in relations:
-                rel_name = ""
-                if 'name' in rel: rel_name = rel["name"]
-                for node in nodes_list:
-                    from_ent = rel.getFromEntity().getId()
-                    if from_ent[0]==node["cid"] and from_ent[1]==node["id"]:
-                        relations_list += [{
-                            "id": rel.getId()[1],
-                            "source": from_ent,
-                            "target": rel.getToEntity().getId(),
-                            "cid": rel.getId()[0],
-                            "name": rel_name,
-                        }]
-            relations = request.configuration.getAllRelations(en,None,None,True,"to")
-            for rel in relations:
-                rel_name = ""
-                if 'name' in rel: rel_name = rel["name"]
-                for node in nodes_list:
-                    to_ent = rel.getToEntity().getId()
-                    if to_ent[0]==node["cid"] and to_ent[1]==node["id"]:
-                        relations_list += [{
-                            "id": rel.getId()[1],
-                            "source": rel.getFromEntity().getId(),
-                            "target": to_ent,
-                            "cid": rel.getId()[0],
-                            "name":rel_name,
-                        }]
-        except Exception,e:
-            pass
+            object_info = Object.objects.get(oid=str(en.getId()).translate(trans,'(|)| '),config=configuration.id,view=the_view)    
+        except Object.DoesNotExist:
+            object_info = Object(oid=str(en.getId()).translate(trans,'(|)| '),config=configuration,color="red",size=10,shape="default",x=0,y=0,scale=0)
+            object_info.save()
+        nodes_list += [{
+            "id": en.getId()[1],
+            "cid": en.getId()[0],
+            "title": en["readable_name"],
+            "x": object_info.x,
+            "y": object_info.y,
+            "color": object_info.color,
+            "shape": object_info.shape,
+            "size": object_info.size,
+            "image": object_info.image,
+            "scale": object_info.scale
+            #"test": str(en.getId()).translate(maketrans("",""),'(|)| '),
+        }]
+        relations = request.configuration.getAllRelations(en,None,None,True,"from")
+        for rel in relations:
+            rel_name = ""
+            if 'name' in rel: rel_name = rel["name"]
+            for node in nodes_list:
+                from_ent = rel.getFromEntity().getId()
+                if from_ent[0]==node["cid"] and from_ent[1]==node["id"]:
+                    relations_list += [{
+                        "id": rel.getId()[1],
+                        "source": from_ent,
+                        "target": rel.getToEntity().getId(),
+                        "cid": rel.getId()[0],
+                        "name": rel_name,
+                    }]
+        relations = request.configuration.getAllRelations(en,None,None,True,"to")
+        for rel in relations:
+            rel_name = ""
+            if 'name' in rel: rel_name = rel["name"]
+            for node in nodes_list:
+                to_ent = rel.getToEntity().getId()
+                if to_ent[0]==node["cid"] and to_ent[1]==node["id"]:
+                    relations_list += [{
+                        "id": rel.getId()[1],
+                        "source": rel.getFromEntity().getId(),
+                        "target": to_ent,
+                        "cid": rel.getId()[0],
+                        "name":rel_name,
+                    }]
     backgrounds = Background.objects.filter(config=configuration,view=the_view)
     for bg in backgrounds:
         backgrounds_list += [{
