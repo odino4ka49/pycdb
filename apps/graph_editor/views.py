@@ -51,7 +51,8 @@ def force_navigation(request):
 def configData(request):
     classes_list = []
     relations_list = []
-    configuration_id = Configuration.objects.get(name=request.configuration.__class__.__name__).id
+    #configuration_id = Configuration.objects.get(name=request.configuration.__class__.__name__).id
+    configuration = Configuration.objects.get(name=request.configuration.__class__.__name__)
 
     cids = request.configuration.classes.keys()
     cids.sort()
@@ -59,7 +60,16 @@ def configData(request):
         cls_info = request.configuration.classes[cls_id]
         #tag_id = cls_info
         #if cls_info["name"]!="tag" and cls_info["name"]!="tag_link":
-        cls_model_info = ObjectClass.objects.get(cid=cls_id,config=configuration_id)
+        try:
+            cls_model_info = ObjectClass.objects.get(cid=cls_id,config=configuration.id)
+        except ObjectClass.DoesNotExist:
+            if cls_info["type"] == "entity_class":
+                cls_model_info = ObjectClass(cid=str(cls_id),config=configuration,color="grey",size=10,shape="circle",x=30,y=20,scale=0);
+                cls_model_info.save();
+            else:
+                cls_model_info = ObjectClass(cid=str(cls_id),config=configuration,color="grey",size=2,shape="stroke",x=100,y=20,scale=0);
+                cls_model_info.save();
+            
         if cls_info["type"] == "entity_class":
             classes_list += [{
                 "id": cls_id,
