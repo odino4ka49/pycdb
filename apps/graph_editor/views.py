@@ -64,10 +64,10 @@ def configData(request):
             cls_model_info = ObjectClass.objects.get(cid=cls_id,config=configuration.id)
         except ObjectClass.DoesNotExist:
             if cls_info["type"] == "entity_class":
-                cls_model_info = ObjectClass(cid=str(cls_id),config=configuration,color="grey",size=10,shape="circle",x=30,y=20,scale=0);
+                cls_model_info = ObjectClass(cid=str(cls_id),config=configuration,color="#cccccc",size=10,shape="circle",x=30,y=20,scale=0);
                 cls_model_info.save();
             else:
-                cls_model_info = ObjectClass(cid=str(cls_id),config=configuration,color="grey",size=2,shape="stroke",x=100,y=20,scale=0);
+                cls_model_info = ObjectClass(cid=str(cls_id),config=configuration,color="#cccccc",size=2,shape="stroke",x=100,y=20,scale=0);
                 cls_model_info.save();
             
         if cls_info["type"] == "entity_class":
@@ -138,7 +138,7 @@ def getGraphData(request):
         try:
             object_info = Object.objects.get(oid=str(en.getId()).translate(trans,'(|)| '),config=configuration.id,view=the_view)    
         except Object.DoesNotExist:
-            object_info = Object(oid=str(en.getId()).translate(trans,'(|)| '),config=configuration,color="red",size=10,shape="default",x=0,y=0,scale=0)
+            object_info = Object(oid=str(en.getId()).translate(trans,'(|)| '),config=configuration,color="#DC143C",size=10,shape="default",x=0,y=0,scale=0)
             object_info.save()
         nodes_list += [{
             "id": en.getId()[1],
