@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <script type="text/javascript" src="{{ STATIC_URL }}graph_constructor/js/d3.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}graph_constructor/js/Main.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}graph_constructor/js/Storage.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}graph_constructor/js/GraphView.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}graph_constructor/js/GraphController.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}graph_constructor/js/TemplatesView.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}graph_constructor/js/Keyboard.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}graph_constructor/css/main.css" > 
+{% endblock %}
+
+{% block content %}
+    <datalist id="graph_shapes">
+        <option value="default">
+        <option value="circle">
+        <option value="square">
+        <option value="triangle-up">
+        <option value="cross">
+        <option value="diamond">
+        <option value="triangle-down">
+    </datalist>
+    <div id="palette_header" class="interface_block"> </div>
+    <svg id="palette_templates" class="interface_block"> </svg>
+    <svg id="graph_map" class="interface_block">
+    </svg>
+    <svg id="filters">
+    	<defs>
+			<filter id="filtersPicture">
+	       		<feComposite result="inputTo_38" in="SourceGraphic" in2="SourceGraphic" operator="arithmetic" k1="0" k2="1" k3="0" k4="0"> </feComposite>
+	       		<feColorMatrix id="filter_38" type="saturate" values="0" data-filterid="38"> </feColorMatrix>
+	     	</filter>
+     	</defs>
+	</svg>
+{% endblock content %}

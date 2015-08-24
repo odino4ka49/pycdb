@@ -24,6 +24,7 @@ urlpatterns = patterns('',
     url(r'^nsls_tools/', include('nsls_tools.urls')),
     url(r'^cxv2_tools/', include('cxv2_tools.urls')),
     url(r'^graph_editor/', include('graph_editor.urls')),
+    url(r'^graph_constructor/', include('graph_constructor.urls')),
 )
 
 urlpatterns += patterns('',

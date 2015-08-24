@@ -11,6 +11,8 @@ class TestConfig(Configuration):
         self.addEntityClass(2, "animal", "Animal", "Just animals", [
                 makeAttribute("name", "Name", "Name of an animal", self.TYPE_STRING, ""),
                 makeAttribute("weight", "Weight", "Weight of an animal", self.TYPE_DOUBLE, 0),
+                makeAttribute("test", "Test", "Weight of an animal", self.TYPE_DOUBLE, 0),
+                makeAttribute("test2", "Test", "Weight of an animal", self.TYPE_DOUBLE, 0),
             ])
 
         self.addRelationClass(101, "friendship", "Friendship", "Friendship relations", [

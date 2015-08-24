@@ -52,7 +52,11 @@ def configData(request):
     classes_list = []
     relations_list = []
     #configuration_id = Configuration.objects.get(name=request.configuration.__class__.__name__).id
-    configuration = Configuration.objects.get(name=request.configuration.__class__.__name__)
+    try:
+        configuration = Configuration.objects.get(name=request.configuration.__class__.__name__)
+    except Configuration.DoesNotExist:
+        configuration = Configuration(name=request.configuration.__class__.__name__);
+        configuration.save();
 
     cids = request.configuration.classes.keys()
     cids.sort()

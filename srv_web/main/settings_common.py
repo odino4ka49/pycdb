@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'portal',
     'graph_editor',
+    'graph_constructor',
 ]
 
 TEMPLATE_CONTEXT_PROCESSORS = (

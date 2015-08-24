@@ -1,0 +1,1 @@
+/** * Created by 1ka on 4/5/14. */ZOOMPYCDB.namespace("ZOOMPYCDB.Layout");ZOOMPYCDB.Layout = function(){    webix.ui({    view:"window",    id:"my_win",    head:"My Window",    body:{        template:"Some text"    }	});    return{    };};
