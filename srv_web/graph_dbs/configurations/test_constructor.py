@@ -16,7 +16,7 @@ class TestConstructor(Configuration):
 
         # addEntityClass(cid, name, readable_name, description, attributes_list)
         # basic type classes
-        self.addEntityClass(1, "type", "Type", "", base_attributes_top + base_attributes_bottom)
+        self.addEntityClass(1, "object_type", "Object type", "", base_attributes_top + base_attributes_bottom)
 
         self.addEntityClass(2, "pin_type", "Pin type", "", base_attributes_top + base_attributes_bottom)
 
@@ -57,6 +57,7 @@ class TestConstructor(Configuration):
                 makeAttribute("color", "Color", "#ffffff", self.TYPE_STRING, ""),
                 makeAttribute("size", "Size", "Should be > 0", self.TYPE_INTEGER, ""),
                 makeAttribute("image", "Image", "Should be an url", self.TYPE_STRING, ""),
+                makeAttribute("scale", "Scale", "Should be > 0", self.TYPE_DOUBLE, ""),
             ] + base_attributes_bottom)
         
         # tag class
@@ -68,7 +69,7 @@ class TestConstructor(Configuration):
         ], [
             makeAllowedRelation(
                 {"cname":"template", "multiplicity" : self.MUL_ZERO_OR_MORE},
-                {"cname":"type", "multiplicity" : self.MUL_ONE}
+                {"cname":"object_type", "multiplicity" : self.MUL_ONE}
             ),
             makeAllowedRelation(
                 {"cname":"object", "multiplicity" : self.MUL_ZERO_OR_MORE},
@@ -95,7 +96,7 @@ class TestConstructor(Configuration):
         self.addRelationClass(103, "composition", "Composition", "Composition links", [
         ], [
             makeAllowedRelation(
-                {"cname":"type", "multiplicity" : self.MUL_ONE},
+                {"cname":"object_type", "multiplicity" : self.MUL_ONE},
                 {"cname":"pin", "multiplicity" : self.MUL_ZERO_OR_MORE}
             ),
             makeAllowedRelation(
